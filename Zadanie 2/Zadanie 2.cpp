@@ -4,7 +4,11 @@
 #include <algorithm>
 
 using namespace std;
+/*bool czy_graf_jest_spojny(vector<vector<int>> graf) {
+	int n = graf.size();
 
+	for ()
+}*/
 int main() {
 	ifstream plik("graf.txt");
 	if (!plik.is_open()) {
@@ -38,6 +42,10 @@ int main() {
 			cout << graf[i][j] << " ";
 		}
 		cout << endl;
+	}
+	for (int x = 0; x < liczba_wierzcholkow; x++) {
+		sort(graf[x].begin(), graf[x].end());
+		graf[x].erase(unique(graf[x].begin(), graf[x].end()), graf[x].end());
 	}
 	return 0;
 
