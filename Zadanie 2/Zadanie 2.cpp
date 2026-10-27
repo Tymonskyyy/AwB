@@ -4,13 +4,32 @@
 #include <algorithm>
 
 using namespace std;
-/*bool czy_graf_jest_spojny(vector<vector<int>> graf) {
+bool czy_graf_jest_spojny(vector<vector<int>> graf) {
 	int n = graf.size();
 
-	for ()
-}*/
+	for (int i = 0; i < n; i++) {
+		for (int j = i + 1; j < n; j++) {
+			bool maja_wspolny_wierzcholek = false;
+
+
+
+			if (maja_wspolny_wierzcholek == true) {
+				if (graf[i] != graf[j]) {
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
 int main() {
-	ifstream plik("graf.txt");
+	string nazwa_pliku;
+	cout << "Podaj nazwe pliku z grafem: ";
+	cin >> nazwa_pliku;
+
+
+	ifstream plik(nazwa_pliku);
+
 	if (!plik.is_open()) {
 		cout << "Nie mozna otworzyc pliku!" << endl;
 		return 1;
@@ -32,7 +51,7 @@ int main() {
 
 		}
 	}
-	//twoj staryu
+
 	plik.close();
 	cout << "Wczytany graf: " << endl;
 
