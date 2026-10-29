@@ -33,17 +33,48 @@ vector<vector<int>> przeksztalceniegrafu(vector<vector<int>> graf) {
 
 	vector<int> poczateklini(liczba_starych_wierzcholkow);
 	vector<int> konieclini(liczba_starych_wierzcholkow);
-
+	//Etap 1: Tworzy H
 	for (int i = 0; i < liczba_starych_wierzcholkow; i++) {
 		poczateklini[i] = 2 * i;
-		konieclini[i] = 2* i + 1;
+		konieclini[i] = 2 * i + 1;
 	}
 	cout << "Etap 1 Tworzenia H" << endl;
 	for (int c = 0; c < liczba_starych_wierzcholkow; c++) {
 		cout << "Wierzcholek " << c << ": " << poczateklini[c] << " " << konieclini[c] << endl;
 	}
-	vector<vector<int>> pusty_graf;
-	return pusty_graf;
+
+	//Etap2: zapisywanie lini miedzy wierzcholkami
+	for (int i = 0; i < liczba_starych_wierzcholkow; i++) {
+		for (int j = 0; j < graf[i].size(); j++) {
+			int v = graf[i][j];
+			int nowa_wartosc = konieclini[i];
+			int stara_wartosc = poczateklini[v];
+			for (int k = 0; k < liczba_starych_wierzcholkow; k++) {
+				if (poczateklini[k] == stara_wartosc) {
+					poczateklini[k] = nowa_wartosc;
+				}
+				if (konieclini[k] == stara_wartosc) {
+					konieclini[k] = nowa_wartosc;
+				}
+			}
+		}
+	}
+	//Etap3 tworzenie H i wynik byczqu
+	int max_wierzcholek = 0;
+	for (int i = 0; i < liczba_starych_wierzcholkow; i++) {
+		if (poczateklini[i] > max_wierzcholek) {
+			max_wierzcholek = poczateklini[i];
+		}
+		if (konieclini[i] > max_wierzcholek) {
+			max_wierzcholek = konieclini[i];
+		}
+	}
+	vector<vector<int>> przeksztalcony_graf(max_wierzcholek + 1);
+		for (int i = 0; i < liczba_starych_wierzcholkow; i++) {
+			przeksztalcony_graf[poczateklini[i]].push_back(konieclini[i]);
+		}
+		return przeksztalcony_graf;
+	
 }
 
 int main() {
