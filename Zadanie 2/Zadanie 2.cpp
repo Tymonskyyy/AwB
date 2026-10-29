@@ -4,15 +4,20 @@
 #include <algorithm>
 
 using namespace std;
-bool czy_graf_jest_spojny(vector<vector<int>> graf) {
-	int n = graf.size();
+bool czyGrafSprzezony(vector<vector<int>> graf) {
+	int iloscwierzchołkow = graf.size();
 
-	for (int i = 0; i < n; i++) {
-		for (int j = i + 1; j < n; j++) {
+	for (int i = 0; i < iloscwierzchołkow; i++) {
+		for (int j = i + 1; j < iloscwierzchołkow; j++) {
 			bool maja_wspolny_wierzcholek = false;
-
-
-
+			for (int x = 0; x < graf[i].size(); x++) {
+				for (int y = 0; y < graf[j].size(); y++) {
+					if (graf[i][x] == graf[j][y]) {
+						maja_wspolny_wierzcholek = true;
+						break;
+					}
+				}
+			}
 			if (maja_wspolny_wierzcholek == true) {
 				if (graf[i] != graf[j]) {
 					return false;
@@ -22,6 +27,25 @@ bool czy_graf_jest_spojny(vector<vector<int>> graf) {
 	}
 	return true;
 }
+
+vector<vector<int>> przeksztalceniegrafu(vector<vector<int>> graf) {
+	int liczba_starych_wierzcholkow = graf.size();
+
+	vector<int> poczateklini(liczba_starych_wierzcholkow);
+	vector<int> konieclini(liczba_starych_wierzcholkow);
+
+	for (int i = 0; i < liczba_starych_wierzcholkow; i++) {
+		poczateklini[i] = 2 * i;
+		konieclini[i] = 2* i + 1;
+	}
+	cout << "Etap 1 Tworzenia H" << endl;
+	for (int c = 0; c < liczba_starych_wierzcholkow; c++) {
+		cout << "Wierzcholek " << c << ": " << poczateklini[c] << " " << konieclini[c] << endl;
+	}
+	vector<vector<int>> pusty_graf;
+	return pusty_graf;
+}
+
 int main() {
 	string nazwa_pliku;
 	cout << "Podaj nazwe pliku z grafem: ";
@@ -65,6 +89,13 @@ int main() {
 	for (int x = 0; x < liczba_wierzcholkow; x++) {
 		sort(graf[x].begin(), graf[x].end());
 		graf[x].erase(unique(graf[x].begin(), graf[x].end()), graf[x].end());
+	}
+	if (czyGrafSprzezony(graf)) {
+		cout << "Graf jest sprzezony." << endl;
+		vector<vector<int>> przeksztalconyGraf = przeksztalceniegrafu(graf);
+	}
+	else {
+		cout << "Graf nie jest sprzezony." << endl;
 	}
 	return 0;
 
