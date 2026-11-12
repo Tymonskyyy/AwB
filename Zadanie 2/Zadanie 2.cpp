@@ -5,10 +5,10 @@
 
 using namespace std;
 bool czyGrafSprzezony(vector<vector<int>> graf) {
-	int iloscwierzchołkow = graf.size();
+	int iloscwierzcholkow = graf.size();
 
-	for (int i = 0; i < iloscwierzchołkow; i++) {
-		for (int j = i + 1; j < iloscwierzchołkow; j++) {
+	for (int i = 0; i < iloscwierzcholkow; i++) {
+		for (int j = i + 1; j < iloscwierzcholkow; j++) {
 			bool maja_wspolny_wierzcholek = false;
 			for (int x = 0; x < graf[i].size(); x++) {
 				for (int y = 0; y < graf[j].size(); y++) {
@@ -70,11 +70,11 @@ vector<vector<int>> przeksztalceniegrafu(vector<vector<int>> graf) {
 		}
 	}
 	vector<vector<int>> przeksztalcony_graf(max_wierzcholek + 1);
-		for (int i = 0; i < liczba_starych_wierzcholkow; i++) {
-			przeksztalcony_graf[poczateklini[i]].push_back(konieclini[i]);
-		}
-		return przeksztalcony_graf;
-	
+	for (int i = 0; i < liczba_starych_wierzcholkow; i++) {
+		przeksztalcony_graf[poczateklini[i]].push_back(konieclini[i]);
+	}
+	return przeksztalcony_graf;
+
 }
 
 int main() {
@@ -124,6 +124,17 @@ int main() {
 	if (czyGrafSprzezony(graf)) {
 		cout << "Graf jest sprzezony." << endl;
 		vector<vector<int>> przeksztalconyGraf = przeksztalceniegrafu(graf);
+		ofstream plikWyjsciowy("wynik.txt");
+		if (plikWyjsciowy.is_open()) {
+			plikWyjsciowy << przeksztalconyGraf.size() << endl;
+			for (int i = 0; i < przeksztalceniegrafu(graf).size(); i++) {
+				for (int j = 0; j < przeksztalceniegrafu(graf)[i].size(); j++){
+					plikWyjsciowy << i << " " << przeksztalceniegrafu(graf)[i][j] << endl;
+				}
+			}
+			plikWyjsciowy.close();
+			cout << "Przeksztalcony graf zostal zapisany do pliku wynik.txt" << endl;
+		}
 	}
 	else {
 		cout << "Graf nie jest sprzezony." << endl;
