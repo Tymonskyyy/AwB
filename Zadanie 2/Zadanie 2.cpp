@@ -27,7 +27,6 @@ bool czyGrafSprzezony(vector<vector<int>> graf) {
 	}
 	return true;
 }
-
 vector<vector<int>> przeksztalceniegrafu(vector<vector<int>> graf) {
 	int liczba_starych_wierzcholkow = graf.size();
 
@@ -76,12 +75,41 @@ vector<vector<int>> przeksztalceniegrafu(vector<vector<int>> graf) {
 	return przeksztalcony_graf;
 
 }
+bool czy1graf(vector<vector<int>> graf) {
+	int rozmiar = graf.size();
+	for (int x = 0; x < rozmiar; x++) {
+		sort(graf[x].begin(), graf[x].end());
+	}
+	for (int i = 0; i < rozmiar; i++) {
+		for (int j = 0; j < graf[i].size(); j++) {
+			if (graf[i][j] == graf[j]) {
+				cout << "Graf ma pętle." << endl;
+				return false;
+			}
+			if (j < graf[i].size() - 1 && graf[i][j] == graf[i][j + 1]) {
+				cout << "graf ma multikrawedzie" << endl;
+				return false;
 
+			}
+		}
+	}
+	return true;
+}
 int main() {
-	string nazwa_pliku;
-	cout << "Podaj nazwe pliku z grafem: ";
-	cin >> nazwa_pliku;
+	// --- AUTO-GENEROWANIE PLIKU TESTOWEGO ---
+	ofstream plik_testowy("graf.txt");
+	if (plik_testowy.is_open()) {
+		plik_testowy << 4 << endl;       // 4 wierzchołki
+		plik_testowy << 0 << " " << 2 << endl; // krawędź 0 -> 2
+		plik_testowy << 0 << " " << 3 << endl; // krawędź 0 -> 3
+		plik_testowy << 1 << " " << 2 << endl; // krawędź 1 -> 2
+		plik_testowy << 1 << " " << 3 << endl; // krawędź 1 -> 3
+		plik_testowy.close();
+	}
 
+	// Ustawiamy nazwę na sztywno, żeby nie trzeba było wpisywać z palca
+	string nazwa_pliku = "graf.txt";
+	// ----------------------------------------
 
 	ifstream plik(nazwa_pliku);
 
